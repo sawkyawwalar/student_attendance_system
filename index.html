@@ -32,26 +32,8 @@
   </head>
   <body>
     <div id="app-4">
-    <div class="form" v-show="loginShow">
-  
-<form class="mb-3">
-  <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-  </div>
-  <div class="form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-</div>
-<div v-show="dataShow">
+   
+<div>
    <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">WHANK</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,10 +42,10 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item ">
+      <li class="nav-item  active">
         <a class="nav-link" href="index.html">My Profile<span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item dropdown active">
+      <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="attendance.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Attandance
         </a>
@@ -75,6 +57,9 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="list.html">List Of Student</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="login.html">Log Out</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
@@ -113,20 +98,21 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
       const url = "http://localhost:8000/students";
+      const matchUrl="http://localhost:8000/students/";
       const app4 = new Vue({
   el: '#app-4',
   data:{  
+            
+            Email:'',
+            
+            pass:'',
           todos : [],
           loginShow:true,
-          dataShow:false
-        },
-        mounted() {
-          axios.get(url).then(response => {
-            alert('response');
-            this.todos = response.data
-          },
-          err=>{alert('not response');})
+          dataShow:false,
+          matchData:[]
+          
         }
+       
 });
 </script>
   </body>

@@ -26,21 +26,16 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item ">
-        <a class="nav-link" href="index.html">My Profile<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item dropdown active">
-        <a class="nav-link dropdown-toggle" href="attendance.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <li class="nav-item active">
+        <a class="nav-link " href="attendance.html" >
           Attandance
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="attendance.html#">Action</a>
-          <a class="dropdown-item" href="attendance.html#">Another action</a>
-          <a class="dropdown-item" href="attendance.html#">Something else here</a>
-        </div>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="list.html">List Of Student</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="login.html">Log Out</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
@@ -49,24 +44,102 @@
     </form>
   </div>
 </nav>
+
+<!-- data table -->
 <div id="app-4">
-<table class="table">
+<table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">Roll</th>
       <th scope="col">Name</th>
+      <th scope="col">Major</th>
       <th scope="col">Attandance</th>
+      <th scope="col">Manage</th>
+      <th scope="col"><button type="button" class="btn btn-success"data-toggle="modal" data-target="#exampleModal">Add Student</button> <button type="button" class="btn btn-primary">Modified</button></th>
+
     </tr>
   </thead>
-  <tbody>
-    <tr  v-for="i in todos">
-      <th scope="row">{{i.roll}}</th>
-      <td>{{i.Name}}</td>
-      <td><div class="progress-bar" role="progressbar" v-bind:style="{width:i.per}" aria-value="i.progress" aria-valuemin="0" aria-valuemax="100">{{i.progress}}%</div></td>
+   <tbody v-for="i in idd">
+    <tr v-for="h in i.sInfo">
+      <th scope="row" >{{h.roll}}</th>
+      <td>{{h.name}}</td>
+      <td>{{h.major}}</td>
+      
+      <td style="width:250px" ><div class="progress-bar" role="progressbar" v-bind:style="{width:h.per}" aria-value="h.per" aria-valuemin="0" aria-valuemax="100">{{h.per}}%</div></td>
+      <td><input type="number" v-model="h.per" max="100" min="0" ></td>
     </tr>
+  </tbody>
 </table>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Student</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Name</label>
+      <input type="text" class="form-control" id="inputEmail4" placeholder="Name">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">CARD</label>
+      <input type="text" class="form-control" id="inputPassword4" placeholder="CARD">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Email</label>
+      <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Password</label>
+      <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="inputState">Roll</label>
+      <select id="inputState" class="form-control">
+        <option selected>1</option>
+        <option>2</option><option>3</option><option>4</option><option>5</option>
+      </select>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputState">Major</label>
+      <select id="inputState" class="form-control">
+        <option selected>AME</option><option>CE</option><option>EcE</option><option>ICT</option><option>IST</option><option>PrE</option>
+      </select>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputState">Subject</label>
+      <select id="inputState" class="form-control">
+        <option selected>Maynmar</option>
+        <option>English</option>
+        <option>ISCE</option>
+        <option>English</option>
+        <option>Mathematic</option>
+      </select>
+    </div>
+    
+  </div>
+ 
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -76,18 +149,58 @@
     <script src="https://unpkg.com/vue"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
-      const url = "http://localhost:8000/students";
+      const url = "http://localhost:8000/teacher";
+      
+       const subj ="http://localhost:8000/";
       const app4 = new Vue({
   el: '#app-4',
-  data:{  
-          todos : []
+  data:{
+          todos : [],
+          idd:[],
+          subject:'', 
+
+          dat :[
+              { roll:"1",
+                name:"222",
+                subj:[
+                {ISCE_31014:"34"}
+                ]
+              },
+              { roll:"2",
+                name:"333",
+                subj:[
+                {ISCE:"30"}
+                ]
+              }
+                
+          ]
         },
         mounted() {
-          axios.get(url).then(response => {
+           axios.get(url).then(response => {
             alert('response');
-            this.todos = response.data
+            this.todos = response.data;
+            subject=this.todos[0].subj;
+           
+            subject=subj+"subject/"+subject;
+            alert(subject);
+              axios.get(subject).then(response => {
+          
+            this.idd=response.data;
+            
+            alert(JSON.stringify(this.idd));
+         
+           
+         
           },
-          err=>{alert('not response');})
+          err=>{alert('not response');});
+          },
+          err=>{alert('not response');});
+
+           
+             
+    
+             
+          
         }
 });
 </script>
